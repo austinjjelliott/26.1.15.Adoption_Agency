@@ -1,0 +1,46 @@
+{% extends 'base.html' %} {% block title %}Details/Edit{% endblock %} {% block
+content %}
+
+<h1>{{pet.name}}</h1>
+<img
+  src="{{ pet.photo_url }}"
+  style="width: 150px; height: 150px; object-fit: contain"
+/>
+<ul>
+  <li>Species: {{ pet.species }}</li>
+  <li>Age: {{ pet.age }}</li>
+  <li>About {{ pet.name }}: {{ pet.notes }}</li>
+</ul>
+{% if pet.available %}
+<div style="font-weight: bold">{{ pet.name }} is AVAILABLE for adoption!</div>
+{% else %}
+<div>
+  {{pet.name}} has been adopted! Please check out our other available pets
+</div>
+{% endif %}
+<a href="/" class="btn btn-danger btn-sm">Go Back</a>
+<hr />
+
+<div class="container">
+  <h3 class="">Edit {{pet.name}} Details</h3>
+  <div class="row">
+    <div class="col-md-8">
+      <form action="" method="POST">
+        {{ form.hidden_tag() }} {% for field in form if field.widget.input_type
+        != "hidden" %}
+        <div class="form-group">
+          {{ field.label }} {% if field.type == 'BooleanField' %} {{
+          field(class_="form-check-input") }} {% else %} {{
+          field(class_="form-control") }} {% endif %} {% for err in field.errors
+          %}
+          <small class="form-text text-danger"> {{ err }} </small>
+          {% endfor %}
+        </div>
+        {% endfor %}
+        <button class="btn btn-success btn-lg">Submit</button>
+      </form>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
